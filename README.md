@@ -21,7 +21,7 @@ Installation
 Use `pip`:
 
 ```bash
-Instruction coming soon ...
+pip install yandex.rasp
 ```
 
 Usage
