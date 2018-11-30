@@ -17,10 +17,10 @@ setuptools.setup(
     install_requires=["requests"],
     classifiers=[
         "Intended Audience :: Developers",
-        "Development Status :: 1 - Alpha",
+        "Development Status :: 3 - Alpha",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: Os Indepent"
+        "Operating System :: OS Independent"
     ],
 )
