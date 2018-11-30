@@ -5,6 +5,7 @@ from exceptions import YandexException
 
 
 class YandexRasp:
+    doc_page = 'https://tech.yandex.ru/rasp/doc/concepts/access-docpage/'
     version = 'v3.0'
     base_url = 'https://api.rasp.yandex.net'
 
@@ -13,7 +14,7 @@ class YandexRasp:
             raise YandexException('API KEY is required')
         self.api_key = api_key
         if domain is None:
-            raise YandexException('Domain is required')
+            raise YandexException(f'Domain is required. Please see {self.doc_page} for more information.')
         self.domain = domain  
         self._client = requests.Session()
 
@@ -41,23 +42,7 @@ class YandexRasp:
 
 
     def search(self, from_, to, date, transport_types,coding_system,                       result_timezone,show_systems='yandex', format='json',                       lang='ru', offset=0, limit=100, add_days_mask=False,                        transfers=False):
-        """ Get transport schedules between two stations
-            https://api.rasp.yandex.net/v3.0/search/ ?
-            from=<код станции отправления>
-            & to=<код станции прибытия>
-            & [format=<формат — XML или JSON>]
-            & [lang=<язык>]
-            & [apikey=<ключ>]
-            & [date=<дата>]
-            & [transport_types=<тип транспорта>]
-            & [system=<система кодирования параметров to и from>]
-            & [show_systems=<система кодирования для ответа>]
-            & [offset=<сдвиг относительно первого рейса в ответе>]
-            & [limit=<ограничение на количество рейсов в ответе>]
-            & [add_days_mask=<запрос календаря хождения рейсов>]
-            & [result_timezone=<часовой пояс>]
-            & [transfers=<признак запроса маршрутов с пересадками>]
-         """
+        """ Get transport schedules between two stations """
         payload = {
              'from': from_,
              'to': to, 
@@ -91,7 +76,12 @@ class YandexRasp:
         return self._make_request('schedule', payload)
 
     def thread_path(self, uid, from_, to, date, show_systems='yandex',                              lang='ru', format='json'):
+        """ Get a list of stations following a thread by
+         the specified thread ID(uid)
+        """
         
+        endpoint = 'thread'
+
         payload = {
             'uid': uid,
             'from': from_,
@@ -102,21 +92,77 @@ class YandexRasp:
             'format': format
         }
 
-        return self._make_request('thread', payload)
+        return self._make_request(endpoint, payload)
 
     def nearest_stations(self, lat, lng, distance, transport_types,station_types, lang='ru', offset=0, limit=50, format='json'):
-        
+        """ get the list of stations located in the specified 
+            radius(distance) from the specified point(lat, lng)
+        """
+
         endpoint = 'nearest_stations'
+        payload = {
+            'lat': lat, 
+            'lng': lng,
+            'distance': distance,
+            'transport_types': transport_types,
+            'station_types': station_types,
+            'lang': lang,
+            'offset': offset,
+            'limit': limit,
+            'format': format
+        }
+
+        return self._make_request(endpoint, payload)
 
     def nearest_settlement(self, lat, lng, distance, lang='ru', format='json'):
+        """ get information about the nearest town from 
+            specified point(lat, lng)
+        """
+
         endpoint = 'nearest_settlement'
 
+        payload = {
+            'lat': lat,
+            'lng': lng,
+            'distance': distance,
+            'lang': lang,
+            'format': format
+        }
+
+        return self._make_request(endpoint, payload)
+
     def carrier(self, code, coding_system, lang='ru', format='json'):
+        """ get information about the carrier using 
+            specified carrier code (code)
+        """
+
         endpoint = 'carrier'
 
+        payload = {
+            'code': code, 
+            'coding_system': coding_system,
+            'lang': lang,
+            'format': format
+        }
+
+        return self._make_request(endpoint, payload)
+
     def all_stations_list(self, lang='ru', format='json'):
+        """ Get all stations list """
+
         endpoint = 'stations_list'
 
+        payload = {
+            'lang': lang, 
+            'format': format
+        }
+
+        return self._make_request(endpoint, payload)
+
     def copyright(self, format='json'):
+        """ Get the about data of the Yandex Rasp service """
+        
         endpoint = 'copyright'
+
+        return self._make_request(endpoint, {'format': format })
 
