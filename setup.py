@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="yandex.rasp",
-    version="0.0.1",
+    version="0.0.2",
     author="Emeka Icha",
     author_email="emeka.icha@gmail.com",
     description="A Python wrapper for Yandex.Schedules API",
