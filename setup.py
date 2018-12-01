@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     keywords="yandex yandex.rasp rest",
     url="https://github.com/mekicha/yandex-rasp-api",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(exclude=("test_api.py",)),
     install_requires=["requests"],
     classifiers=[
         "Intended Audience :: Developers",
