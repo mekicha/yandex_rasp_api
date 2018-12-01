@@ -1,7 +1,7 @@
 import requests
 from requests.exceptions import ConnectionError
 
-from exceptions import YandexException
+from .exceptions import YandexException
 
 
 class YandexRasp:

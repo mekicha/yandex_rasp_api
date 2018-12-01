@@ -1,2 +1,2 @@
 
-from api.api import YandexRasp
+from .api.api import YandexRasp
